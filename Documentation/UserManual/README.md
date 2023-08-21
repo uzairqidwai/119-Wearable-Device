@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# User Manual
+User manual or guide for the end-users.

@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# Firmware
+Code that runs on the device's microcontroller.

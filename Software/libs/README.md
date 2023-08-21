@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# Libs
+ Libraries specific to the firmware.

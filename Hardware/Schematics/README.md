@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# Schematics
+Contains electrical schematics and diagrams.

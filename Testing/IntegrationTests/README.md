@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# Integration Tests
+Scripts for integration tests.

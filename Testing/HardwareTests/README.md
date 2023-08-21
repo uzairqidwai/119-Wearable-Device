@@ -1,2 +1,2 @@
-# 119-Wearable-Device
-test
+# Hardware Tests
+Tests related to hardware components and their integration.
