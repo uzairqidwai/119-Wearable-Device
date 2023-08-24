@@ -41,3 +41,31 @@ To send an SMS in text mode, send the command:
 ```bash
 AT+CMGF=1
 ```
+
+You should receive an `OK` response.
+
+### 5. Send the SMS:
+
+To send an SMS to a specific number, use the `AT+CMGS` command. Replace `PHONENUMBER` with the recipient's phone number and `YOUR_MESSAGE` with your message content:
+```bash
+AT+CMGS="PHONENUMBER"
+> YOUR_MESSAGE
+```
+
+After typing your message, send the message by pressing `Ctrl+Z` (or sending the ASCII code for `Ctrl+Z`, which is `0x1A`).
+
+### 6. Confirmation:
+
+Upon successful dispatch, the module should respond with:
+```bash
++CMGS: <message reference number>
+OK
+```
+
+
+## Troubleshooting:
+
+1. Ensure the module is registered on the network. Use the `AT+CREG?` command. A response of `+CREG: 0,1` or `+CREG: 1,1` indicates registration.
+2. Check signal strength with `AT+CSQ`. Values near 31 indicate strong signal.
+3. Ensure the SIM card has SMS capabilities and sufficient balance/credit.
+
