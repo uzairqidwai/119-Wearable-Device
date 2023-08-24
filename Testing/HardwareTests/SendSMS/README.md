@@ -19,7 +19,7 @@ This guide provides a step-by-step procedure for sending an SMS using the A9G GS
 
 ### 2. Open Terminal Software:
 
-- Connect to the appropriate COM port with a baud rate (commonly 115200 for the A9G).
+- Connect to the appropriate COM port with a baud rate (115200 for the A9G).
 - Ensure settings are 8-N-1: 8 data bits, no parity, 1 stop bit.
 
 ### 3. Test Basic Communication:
