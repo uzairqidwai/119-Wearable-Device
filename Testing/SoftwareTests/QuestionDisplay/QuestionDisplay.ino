@@ -1,4 +1,3 @@
-
 #include "config.h"  // Include the external config.h file
 #include <TFT_eSPI.h>
 #include <ArduinoJson.h>  // Library to parse JSON
@@ -51,12 +50,36 @@ void drawScreen() {
     // Draw red border
     tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
 
+    // Check for actions and execute them
+    if (current_question.containsKey("yes_action")) {
+        executeAction(current_question["yes_action"].as<String>());
+    }
+    if (current_question.containsKey("no_action")) {
+        executeAction(current_question["no_action"].as<String>());
+    }
+
     // Reset to default Arduino font
     tft.setTextSize(2);  // Adjust the size as needed
 
     // Display the current question centered
     String question_text = current_question["question"].as<String>();
     printWrappedText(question_text, 20);
+}
+
+void executeAction(String action) {
+    if (action == "yellowScreen") {
+        yellowScreen();
+    } else if (action == "blueScreen") {
+        blueScreen();
+    }
+}
+
+void yellowScreen() {
+    tft.fillScreen(TFT_YELLOW);
+}
+
+void blueScreen() {
+    tft.fillScreen(TFT_BLUE);
 }
 
 void printWrappedText(String text, int startY) {

@@ -2,46 +2,41 @@
 #define CONFIG_H
 
 const char* QUESTIONS_CONFIG = R"({
-    "question": "Is it sunny outside?",
+    "question": "Is it about to rain?",
+    "yes_action": "",
+    "no_action": "",
     "yes": {
-        "question": "Do you want to go for a walk?",
+        "question": "Do you want to take an umbrella?",
+        "yes_action": "",
+        "no_action": "",
         "yes": {
-            "question": "Take an umbrella just in case?",
+            "question": "Do you have an umbrella?",
+            "yes_action": "",
+            "no_action": "yellowScreen",
             "yes": {
-                "question": "Great! Enjoy your walk."
+                "question": "Good Luck!",
+                "yes_action": "",
+                "no_action": ""
             },
             "no": {
-                "question": "Alright! Stay safe and enjoy."
+                "question": "Please go buy one!",
+                "yes_action": "",
+                "no_action": ""
             }
         },
         "no": {
-            "question": "Stay inside and read a book?",
+            "question": "Do you have a raincoat?",
+            "yes_action": "",
+            "no_action": "redScreen",
             "yes": {
-                "question": "Enjoy your reading!"
+                "question": "Good Luck!",
+                "yes_action": "",
+                "no_action": ""
             },
             "no": {
-                "question": "Maybe watch a movie then?"
-            }
-        }
-    },
-    "no": {
-        "question": "Do you want to watch a movie?",
-        "yes": {
-            "question": "A comedy or thriller?",
-            "yes": {
-                "question": "Enjoy the laughs!"
-            },
-            "no": {
-                "question": "Stay on the edge of your seat!"
-            }
-        },
-        "no": {
-            "question": "How about reading a book?",
-            "yes": {
-                "question": "Great choice!"
-            },
-            "no": {
-                "question": "Perhaps a nap then?"
+                "question": "Please go buy one!",
+                "yes_action": "",
+                "no_action": ""
             }
         }
     }
