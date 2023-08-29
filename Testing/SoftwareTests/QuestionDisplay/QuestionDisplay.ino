@@ -72,6 +72,12 @@ void executeAction(String action) {
     } else if (action == "blueScreen") {
         blueScreen();
     }
+    else if (action == "redScreen") {
+        redScreen();
+    }
+    else if (action == "greenScreen") {
+        greenScreen();
+    }
 }
 
 void yellowScreen() {
@@ -80,6 +86,14 @@ void yellowScreen() {
 
 void blueScreen() {
     tft.fillScreen(TFT_BLUE);
+}
+
+void redScreen() {
+    tft.fillScreen(TFT_RED);
+}
+
+void greenScreen() {
+    tft.fillScreen(TFT_GREEN);
 }
 
 void printWrappedText(String text, int startY) {
