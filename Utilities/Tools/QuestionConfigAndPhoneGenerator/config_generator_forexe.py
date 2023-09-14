@@ -270,20 +270,20 @@ class MainWindow(QMainWindow):
 
         try:
             current_dir = os.getcwd()
-            file_path = 'config.h'
+            file_path = 'questions.h'
             print(f"Current Directory: {current_dir}")
             print(f"File Path: {os.path.join(current_dir, file_path)}")
             with open(file_path, 'w') as f:
                 f.write(self.generate_config_h(config))
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setText("Configuration saved successfully.")
+            msg.setText("Questions saved successfully.")
             msg.setWindowTitle("Success")
             msg.exec_()
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
-            msg.setText("Error saving configuration: " + str(e))
+            msg.setText("Error saving questions: " + str(e))
             msg.setWindowTitle("Error")
             msg.exec_()
 

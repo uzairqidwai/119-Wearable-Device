@@ -299,16 +299,16 @@ class MainWindow(QMainWindow):
         config = self.node_to_dict(self.root_node)
 
         try:
-            file_path = os.path.join(os.path.dirname(__file__), 'config.h')
+            file_path = os.path.join(os.path.dirname(__file__), 'questions.h')
             with open(file_path, 'w') as f:
                 f.write(self.generate_config_h(config))
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setText("Configuration saved successfully.")
+            msg.setText("Questions saved successfully.")
             msg.setWindowTitle("Success")
             msg.exec_()
         except Exception as e:
-            print("Error saving configuration:", str(e))
+            print("Error saving questions:", str(e))
 
         self.update_questions_tree()
 
