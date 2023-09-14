@@ -9,8 +9,8 @@ int buttonState2 = 0; // variable for reading the pushbutton status
 String location = "";
 
 void setup() {
-  Serial.begin(9600);
-  mySerial.begin(9600);
+  Serial.begin(115200);
+  mySerial.begin(115200);
   pinMode(buttonPin1, INPUT_PULLUP);
   pinMode(buttonPin2, INPUT_PULLUP);
 }

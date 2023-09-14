@@ -1,7 +1,9 @@
 #include <TFT_eSPI.h>
 #include <ArduinoJson.h>
-#include "config.h"
+#include "questions.h"
 #include "QR.h"  // Assuming QR.h contains a bitmap of the QR code
+#include "pin_config.h"
+
 
 TFT_eSPI tft = TFT_eSPI();
 
@@ -32,6 +34,10 @@ void setup() {
 
     pinMode(0, INPUT_PULLUP);
     pinMode(14, INPUT_PULLUP);
+
+    //Battery Setup
+    pinMode(PIN_POWER_ON, OUTPUT);
+    digitalWrite(PIN_POWER_ON, HIGH);
 }
 
 void loop() {
