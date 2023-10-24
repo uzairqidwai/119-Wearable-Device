@@ -26,7 +26,7 @@ volatile bool gpsOn = false;  // Global flag for GPS
 volatile bool leftButton = false;  // Left Button Press Flag
 volatile bool rightButton = false;  // Right Button Press Flag
 volatile bool backButton = false;  // Back Button Press Flag
-volatile bool triggerButton = true;  // Right Button Press Flag
+volatile bool triggerButton = true;  // 
 
 const unsigned long debounceDelay = 250;  // Debounce time in milliseconds
 volatile unsigned long lastInterruptTime14 = 0;  // Last time the interrupt was triggered for pin 14
@@ -63,7 +63,7 @@ void loop() {
   if (alarmIsActive) {
     alarmState();
   }
-  else {
+  else if (!triggerButton) {
     stopAlarm();
   }
   displayQuestions();
@@ -106,22 +106,15 @@ void handleInterruptLeft() {
 }
 
 void handleInterruptBack() {
-  Serial.print("In Back ISR");
   int currentMillis = millis();
   if (currentMillis - lastInterruptTime0 > debounceDelay) {
     lastInterruptTime0 = currentMillis;
-    //If button pressed, turn alarm off & start question flow
+    //If button pressed, turn alarm on
     if ((!alarmIsActive) && (triggerButton)) {
       alarmIsActive = true; // Start the alarm and LED
-      Serial.print("Set Alarm to True");
-      
-    }
-    if (!alarmIsActive && !triggerButton) {
-      backButton = true;
-      Serial.print("Now Back Button");
+      triggerButton = false;
     }
   }
-  Serial.print("In Back ISR");
 }
 
 void setupGPS() {
