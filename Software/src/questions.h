@@ -2,77 +2,52 @@
 #define CONFIG_H
 
 const char* QUESTIONS_CONFIG = R"({
-    "question": "Do you enjoy cooking?",
+"question": ".",
     "yes_action": "",
     "no_action": "",
     "yes": {
-        "question": "Do you prefer baking over cooking on the stove?",
+        "question": "Am I breathing",
         "yes_action": "",
         "no_action": "",
         "yes": {
-            "question": "Have you ever baked a cake?",
+            "question": "Am I conscious?",
             "yes_action": "",
             "no_action": "",
             "yes": {
-                "question": "You are a baker!",
-                "yes_action": "yellowScreen",
-                "no_action": ""
+                "question": "Am I coherent?",
+                "yes_action": "",
+                "no_action": "",
+                "yes": {
+                    "question": "Am I moving?",
+                    "yes_action": "",
+                    "no_action": "",
+                    "yes": {
+                        "question": "I've had a seizure. Please touch here to call Jen's preferred emergency contact for help.",
+                        "yes_action": "",
+                        "no_action": ""
+                    },
+                    "no": {
+                        "question": "I'm experiencing temporary paralysis. Please touch here to call Jen's preferred emergency contact for help.",
+                        "yes_action": "",
+                        "no_action": ""
+                    }
+                },
+                "no": {
+                    "question": "I've had a seizure. Please touch here to call Jen's preferred emergency contact for help.",
+                    "yes_action": "",
+                    "no_action": ""
+                }
             },
             "no": {
-                "question": "You are a chef!",
+                "question": "Please wait one minute. If I do not regain consciousness, please call 911. A link to call 911 automatically appears after one minute. Touch here if I wake up.\n",
                 "yes_action": "",
-                "no_action": "redScreen"
+                "no_action": ""
             }
         },
         "no": {
-            "question": "Have you ever cooked pasta?",
+            "question": "Call 911",
             "yes_action": "",
-            "no_action": "",
-            "yes": {
-                "question": "You are a chef!",
-                "yes_action": "redScreen",
-                "no_action": ""
-            },
-            "no": {
-                "question": "You are a baker!",
-                "yes_action": "",
-                "no_action": "yellowScreen"
-            }
-        }
-    },
-    "no": {
-        "question": "Do you prefer takeout over home-cooked meals?",
-        "yes_action": "",
-        "no_action": "",
-        "yes": {
-            "question": "Do you have a favorite restaurant?",
-            "yes_action": "",
-            "no_action": "",
-            "yes": {
-                "question": "Glad you have a favourite resturant!",
-                "yes_action": "greenScreen",
-                "no_action": ""
-            },
-            "no": {
-                "question": "I hope you find a resturant!",
-                "yes_action": "",
-                "no_action": "blueScreen"
-            }
-        },
-        "no": {
-            "question": "Do you have a favorite home-cooked meal?",
-            "yes_action": "",
-            "no_action": "",
-            "yes": {
-                "question": "Glad you have a favourite meal!",
-                "yes_action": "greenScreen",
-                "no_action": ""
-            },
-            "no": {
-                "question": "I hope you find a meal!",
-                "yes_action": "",
-                "no_action": "blueScreen"
-            }
+            "no_action": ""
         }
     }
 })";
