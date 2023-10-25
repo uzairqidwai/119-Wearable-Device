@@ -275,7 +275,7 @@ void displayQuestions() {
 }
 
 
-void xdrawMainScreen() {
+void drawMainScreen() {
   tft.fillScreen(TFT_BLACK);
   tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
   tft.setTextSize(2);
@@ -284,22 +284,6 @@ void xdrawMainScreen() {
   int y = tft.height() / 2;
   tft.pushImage(qrX, y, 111, 111, QR);
 }
-
-void drawMainScreen() {
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_LIGHTGREY); // Set text color to light grey
-  tft.setTextSize(2);
-  
-  String text = "Standby";
-  int x = (tft.width() - tft.textWidth(text)) / 2;
-  int y = (tft.height() - tft.fontHeight()) / 2;
-  
-  tft.setCursor(x, y);
-  tft.print(text);
-}
-
-
-
 
 void drawScreen() {
   tft.fillScreen(TFT_BLACK);
