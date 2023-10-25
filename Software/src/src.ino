@@ -50,7 +50,7 @@ void setup() {
   Serial.begin(9600);  // Initialize serial communication at 9600 baud rate
   mySerial.begin(115200);
   setupSirenAndLED();
-  setupQR();
+  displayStandbyScreen();  // Display "standby" on boot
   pinMode(14, INPUT_PULLUP); //Right Button
   pinMode(0, INPUT_PULLUP); //Left Button
   pinMode(12, INPUT_PULLUP); //Back Button
@@ -58,7 +58,6 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(0), handleInterruptLeft, HIGH);
   attachInterrupt(digitalPinToInterrupt(12), handleInterruptBack, HIGH);
   startMillis = millis();
-
 }
 
 void loop() {
@@ -113,6 +112,7 @@ void handleInterruptBack() {
     lastInterruptTime0 = currentMillis;
     if ((!alarmIsActive) && (triggerButton)) {
       alarmIsActive = true; // Start the alarm and LED
+      setupQR();  // Display QR code and its associated text when alarm is triggered
       triggerButton = false;
     }
     else {
@@ -245,6 +245,21 @@ void setupQR() {
   current_question = doc.as<JsonObject>();
   drawMainScreen();
 
+  //Battery Setup
+  pinMode(PIN_POWER_ON, OUTPUT);
+  digitalWrite(PIN_POWER_ON, HIGH);
+}
+
+void displayStandbyScreen() {
+  tft.init();
+  tft.setRotation(4);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextSize(2);
+  String text = "standby";
+  int x = (tft.width() - tft.textWidth(text)) / 2;
+  int y = (tft.height() - tft.fontHeight()) / 2;
+  tft.setCursor(x, y);
+  tft.print(text);
   //Battery Setup
   pinMode(PIN_POWER_ON, OUTPUT);
   digitalWrite(PIN_POWER_ON, HIGH);
