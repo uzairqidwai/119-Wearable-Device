@@ -289,17 +289,18 @@ void drawScreen() {
   tft.fillScreen(TFT_BLACK);
   tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
 
+  tft.setTextSize(2);
+  String question_text = current_question["question"].as<String>();
+  printWrappedText(question_text, 20);
+
   if (current_question.containsKey("yes_action")) {
     executeAction(current_question["yes_action"].as<String>());
   }
   if (current_question.containsKey("no_action")) {
     executeAction(current_question["no_action"].as<String>());
   }
-
-  tft.setTextSize(2);
-  String question_text = current_question["question"].as<String>();
-  printWrappedText(question_text, 20);
 }
+
 
 void executeAction(String action) {
   if (action == "yellowScreen") {

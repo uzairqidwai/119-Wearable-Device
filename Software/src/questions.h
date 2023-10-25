@@ -16,26 +16,26 @@ const char* QUESTIONS_CONFIG = R"({
             "yes": {
                 "question": "Am I coherent?",
                 "yes_action": "",
-                "no_action": "sendLoc2EmgCnt",
+                "no_action": "",
                 "yes": {
                     "question": "Am I moving?",
-                    "yes_action": "sendLoc2EmgCnt",
-                    "no_action": "sendLoc2EmgCnt",
+                    "yes_action": "",
+                    "no_action": "",
                     "yes": {
                         "question": "I've had a seizure. My emergency contact has been notified.",
-                        "yes_action": "",
+                        "yes_action": "sendLoc2EmgCnt",
                         "no_action": ""
                     },
                     "no": {
                         "question": "I'm experiencing temporary paralysis. My emergency contact has been notified.",
                         "yes_action": "",
-                        "no_action": ""
+                        "no_action": "sendLoc2EmgCnt"
                     }
                 },
                 "no": {
                     "question": "I've had a seizure. My emergency contact has been notified.",
                     "yes_action": "",
-                    "no_action": ""
+                    "no_action": "sendLoc2EmgCnt"
                 }
             },
             "no": {
