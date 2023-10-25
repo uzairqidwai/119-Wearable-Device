@@ -35,6 +35,13 @@ volatile unsigned long lastInterruptTime0 = 0;   // Last time the interrupt was 
 String location = "";
 unsigned int startMillis;
 
+unsigned long lastButtonInteractionMillis = 0;
+const long overarchingThreshold = 30000;  // 30 seconds
+const long abandonedThreshold = 20000;    // 20 seconds
+bool textSentForOverarching = false;
+bool textSentForAbandon = false;
+
+
 JsonObject previous_question;
 
 SoftwareSerial mySerial(1, 2); // RX, TX
@@ -72,12 +79,14 @@ void loop() {
   if (!gpsOn) {
     setupGPS();
   }
+  checkTimers();
 }
 
 
 void handleInterruptRight() {
   int currentMillis = millis();
   if (currentMillis - lastInterruptTime14 > debounceDelay) {
+    lastButtonInteractionMillis = millis();
     lastInterruptTime14 = currentMillis;
     //If button pressed, turn alarm off & start question flow
     if (alarmIsActive) {
@@ -94,6 +103,7 @@ void handleInterruptRight() {
 void handleInterruptLeft() {
   int currentMillis = millis();
   if (currentMillis - lastInterruptTime0 > debounceDelay) {
+    lastButtonInteractionMillis = millis();
     lastInterruptTime0 = currentMillis;
     //If button pressed, turn alarm off & start question flow
     if (alarmIsActive) {
@@ -109,6 +119,7 @@ void handleInterruptLeft() {
 void handleInterruptBack() {
   int currentMillis = millis();
   if (currentMillis - lastInterruptTime0 > debounceDelay) {
+    lastButtonInteractionMillis = millis();
     lastInterruptTime0 = currentMillis;
     if ((!alarmIsActive) && (triggerButton)) {
       alarmIsActive = true; // Start the alarm and LED
@@ -145,6 +156,21 @@ void setupGPS() {
     }
 }
 }
+
+void checkTimers() {
+    unsigned long currentMillis = millis();
+
+    if (alarmIsActive && !textSentForOverarching && (currentMillis - lastButtonInteractionMillis > overarchingThreshold)) {
+        sendLoc2EmgCnt();  
+        textSentForOverarching = true;
+    }
+
+    if (startQuestionFlow && !textSentForAbandon && (currentMillis - lastButtonInteractionMillis > abandonedThreshold)) {
+        sendLoc2EmgCnt();  
+        textSentForAbandon = true;
+    }
+}
+
 
 void sendLoc2EmgCnt() {
   getLocation();
