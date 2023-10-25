@@ -190,9 +190,9 @@ void sendMessage() {
   delay(100);
   sendATCommand("AT+CMGS=\"" PHONE_NUMBER "\"");
   delay(1000);
-  mySerial.print("Jenn's 119 Device has been triggered. Here is her location:");
+  mySerial.print("Jenn is in trouble. Location:");
   if (location.length() > 0) {
-    mySerial.print(" Location: https://www.google.com/maps?q=");
+    mySerial.print(" https://www.google.com/maps?q=");
     location.trim();  // remove any leading and trailing whitespaces
     mySerial.print(location);
   }
