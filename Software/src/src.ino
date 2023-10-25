@@ -154,19 +154,32 @@ void sendLoc2EmgCnt() {
     Serial.write(mySerial.read());
   }
 }
-
 void getLocation() {
   for (int i = 0; i < 10; i++) {
     mySerial.flush();
     String response = sendATCommand("AT+LOCATION=2");
-    if (response.indexOf("ERROR") < 0) {
-      location = response.substring(response.indexOf("\r\n") + 2); // skip the first line of the response
-      location = location.substring(0, location.length() - 4); // remove the last four characters which are '\r\nOK'
-      break;
+    
+    // Check if the response has valid GPS coordinates by checking for two periods (decimals)
+    int firstPeriod = response.indexOf('.');
+    int secondPeriod = response.indexOf('.', firstPeriod + 1);
+    
+    if (firstPeriod > 0 && secondPeriod > 0) {
+      int startIdx = response.lastIndexOf('\n', firstPeriod) + 1;
+      int endIdx = response.indexOf('\n', secondPeriod);
+      
+      if (startIdx >= 0 && endIdx > startIdx) {
+        location = response.substring(startIdx, endIdx);
+        location.trim(); // Remove any unexpected whitespace
+        return;  // Found a valid location format, break out of loop
+      }
     }
     delay(1000);
   }
 }
+
+
+
+
 
 
 void sendMessage() {
@@ -177,7 +190,7 @@ void sendMessage() {
   delay(100);
   sendATCommand("AT+CMGS=\"" PHONE_NUMBER "\"");
   delay(1000);
-  mySerial.print("This is a test message.");
+  mySerial.print("Jenn's 119 Device has been triggered. Here is her location:");
   if (location.length() > 0) {
     mySerial.print(" Location: https://www.google.com/maps?q=");
     location.trim();  // remove any leading and trailing whitespaces
