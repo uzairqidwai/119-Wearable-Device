@@ -35,6 +35,8 @@ volatile unsigned long lastInterruptTime0 = 0;   // Last time the interrupt was 
 String location = "";
 unsigned int startMillis;
 
+JsonObject previous_question;
+
 SoftwareSerial mySerial(1, 2); // RX, TX
 TFT_eSPI tft = TFT_eSPI();
 
@@ -109,10 +111,12 @@ void handleInterruptBack() {
   int currentMillis = millis();
   if (currentMillis - lastInterruptTime0 > debounceDelay) {
     lastInterruptTime0 = currentMillis;
-    //If button pressed, turn alarm on
     if ((!alarmIsActive) && (triggerButton)) {
       alarmIsActive = true; // Start the alarm and LED
       triggerButton = false;
+    }
+    else {
+      backButton = true;
     }
   }
 }
@@ -237,6 +241,7 @@ void displayQuestions() {
   if (startQuestionFlow) {
     delay(200);
     if (rightButton) {
+      previous_question = current_question;
       drawScreen();
       delay(200);
 
@@ -248,6 +253,7 @@ void displayQuestions() {
     }
 
     if (leftButton) {
+      previous_question = current_question;
       drawScreen();
       delay(200);
 
@@ -258,18 +264,42 @@ void displayQuestions() {
       leftButton = false;
     }
 
+    if (backButton) {
+      if (!previous_question.isNull()) {
+        current_question = previous_question;
+        drawScreen();
+      }
+      backButton = false; // Reset the back button flag
+    }
   }
 }
 
-void drawMainScreen() {
+
+void xdrawMainScreen() {
   tft.fillScreen(TFT_BLACK);
   tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
   tft.setTextSize(2);
-  printWrappedText("Press a button to start the device, or scan the QR Code Below", 20);
+  printWrappedText("Press YES to start the device, or scan the QR Code Below", 20);
   int qrX = (tft.width() - 111) / 2;
   int y = tft.height() / 2;
   tft.pushImage(qrX, y, 111, 111, QR);
 }
+
+void drawMainScreen() {
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_LIGHTGREY); // Set text color to light grey
+  tft.setTextSize(2);
+  
+  String text = "Standby";
+  int x = (tft.width() - tft.textWidth(text)) / 2;
+  int y = (tft.height() - tft.fontHeight()) / 2;
+  
+  tft.setCursor(x, y);
+  tft.print(text);
+}
+
+
+
 
 void drawScreen() {
   tft.fillScreen(TFT_BLACK);

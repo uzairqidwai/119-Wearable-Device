@@ -16,30 +16,30 @@ const char* QUESTIONS_CONFIG = R"({
             "yes": {
                 "question": "Am I coherent?",
                 "yes_action": "",
-                "no_action": "",
+                "no_action": "sendLoc2EmgCnt",
                 "yes": {
                     "question": "Am I moving?",
-                    "yes_action": "",
-                    "no_action": "",
+                    "yes_action": "sendLoc2EmgCnt",
+                    "no_action": "sendLoc2EmgCnt",
                     "yes": {
-                        "question": "I've had a seizure. Please touch here to call Jen's preferred emergency contact for help.",
+                        "question": "I've had a seizure. My emergency contact has been notified.",
                         "yes_action": "",
                         "no_action": ""
                     },
                     "no": {
-                        "question": "I'm experiencing temporary paralysis. Please touch here to call Jen's preferred emergency contact for help.",
+                        "question": "I'm experiencing temporary paralysis. My emergency contact has been notified.",
                         "yes_action": "",
                         "no_action": ""
                     }
                 },
                 "no": {
-                    "question": "I've had a seizure. Please touch here to call Jen's preferred emergency contact for help.",
+                    "question": "I've had a seizure. My emergency contact has been notified.",
                     "yes_action": "",
                     "no_action": ""
                 }
             },
             "no": {
-                "question": "Please wait one minute. If I do not regain consciousness, please call 911. A link to call 911 automatically appears after one minute. Touch here if I wake up.\n",
+                "question": "Please wait one minute. If I do not regain consciousness, please call 911.",
                 "yes_action": "",
                 "no_action": ""
             }
