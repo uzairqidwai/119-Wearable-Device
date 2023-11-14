@@ -9,6 +9,9 @@
 #include "phonenumber.h"
 
 
+
+
+
 #define SAMPLE_RATE 44100
 #define PIN_I2S_BCLK 3
 #define PIN_I2S_LRC 10
@@ -46,7 +49,7 @@ const int maxStackSize = 10;  // Adjust the size as needed
 JsonObject questionStack[maxStackSize];
 int stackPointer = -1;
 
-
+const int resetButtonPin = 43; 
 
 JsonObject previous_question;
 
@@ -76,6 +79,9 @@ void setup() {
   //Battery Setup
   pinMode(PIN_POWER_ON, OUTPUT);
   digitalWrite(PIN_POWER_ON, HIGH);
+
+  pinMode(resetButtonPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(resetButtonPin), resetDevice, FALLING);
 }
 
 void loop() {
@@ -93,6 +99,17 @@ void loop() {
   checkTimers();
 }
 
+void resetDevice() {
+  // Debounce delay
+  delay(100);
+  // Check if button is still pressed
+  if (digitalRead(resetButtonPin) == LOW) {
+    // Log to serial
+    Serial.println("Resetting device...");
+    // Call the ESP32 software reset function
+    ESP.restart();
+  }
+}
 
 void handleInterruptRight() {
   int currentMillis = millis();
@@ -291,7 +308,7 @@ void displayStandbyScreen() {
   tft.init();
   tft.setRotation(4);
   tft.fillScreen(TFT_BLACK);
-  tft.setTextSize(2);
+  tft.setTextSize(4);
   String text = "standby";
   int x = (tft.width() - tft.textWidth(text)) / 2;
   int y = (tft.height() - tft.fontHeight()) / 2;
@@ -360,8 +377,7 @@ void drawMainScreen() {
 void drawScreen() {
   tft.fillScreen(TFT_BLACK);
   tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
-
-  tft.setTextSize(2);
+  tft.setTextSize(3);
   String question_text = current_question["question"].as<String>();
   printWrappedText(question_text, 20);
 
