@@ -17,6 +17,7 @@
 #define LED_PIN 13
 
 
+const int batteryPin = 4;
 unsigned long previousMillis = 0;
 const long interval = 500;  // interval at which to blink (milliseconds)
 volatile bool alarmIsActive = false;  // Global flag
@@ -36,7 +37,7 @@ String location = "";
 unsigned int startMillis;
 
 unsigned long lastButtonInteractionMillis = 0;
-const long overarchingThreshold = 30000;  // 30 seconds
+const long overarchingThreshold = 60000;  // 60 seconds
 const long abandonedThreshold = 20000;    // 20 seconds
 bool textSentForOverarching = false;
 bool textSentForAbandon = false;
@@ -65,6 +66,11 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(0), handleInterruptLeft, HIGH);
   attachInterrupt(digitalPinToInterrupt(12), handleInterruptBack, HIGH);
   startMillis = millis();
+
+  pinMode(batteryPin, INPUT);
+  //Battery Setup
+  pinMode(PIN_POWER_ON, OUTPUT);
+  digitalWrite(PIN_POWER_ON, HIGH);
 }
 
 void loop() {
