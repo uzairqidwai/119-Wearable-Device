@@ -42,6 +42,11 @@ const long abandonedThreshold = 20000;    // 20 seconds
 bool textSentForOverarching = false;
 bool textSentForAbandon = false;
 
+const int maxStackSize = 10;  // Adjust the size as needed
+JsonObject questionStack[maxStackSize];
+int stackPointer = -1;
+
+
 
 JsonObject previous_question;
 
@@ -300,10 +305,13 @@ void displayStandbyScreen() {
 void displayQuestions() {
   if (startQuestionFlow) {
     delay(200);
+
     if (rightButton) {
-      previous_question = current_question;
-      drawScreen();
-      delay(200);
+      // Push current question to stack
+      if (stackPointer < maxStackSize - 1) {
+        stackPointer++;
+        questionStack[stackPointer] = current_question;
+      }
 
       if (current_question.containsKey("yes")) {
         current_question = current_question["yes"].as<JsonObject>();
@@ -313,9 +321,11 @@ void displayQuestions() {
     }
 
     if (leftButton) {
-      previous_question = current_question;
-      drawScreen();
-      delay(200);
+      // Push current question to stack
+      if (stackPointer < maxStackSize - 1) {
+        stackPointer++;
+        questionStack[stackPointer] = current_question;
+      }
 
       if (current_question.containsKey("no")) {
         current_question = current_question["no"].as<JsonObject>();
@@ -325,14 +335,16 @@ void displayQuestions() {
     }
 
     if (backButton) {
-      if (!previous_question.isNull()) {
-        current_question = previous_question;
+      if (stackPointer >= 0) {
+        current_question = questionStack[stackPointer];
+        stackPointer--;
         drawScreen();
       }
       backButton = false; // Reset the back button flag
     }
   }
 }
+
 
 
 void drawMainScreen() {
